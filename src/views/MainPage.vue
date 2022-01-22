@@ -26,7 +26,7 @@
 import { computed, defineComponent, ref } from "@vue/composition-api";
 
 import NewItem from "../components/NewItem.vue";
-import Item from "../components/Item.vue";
+import TodoItem from "../components/TodoItem.vue";
 
 interface todo {
   id: number;
@@ -39,7 +39,7 @@ let lastId = 1;
 export default defineComponent({
   components: {
     "new-item": NewItem,
-    "todo-item": Item,
+    "todo-item": TodoItem,
   },
   setup() {
     const hideDone = ref(true);
