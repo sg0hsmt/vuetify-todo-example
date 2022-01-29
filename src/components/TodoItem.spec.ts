@@ -22,13 +22,13 @@ describe("TodoItem.vue", () => {
     });
 
     const checkbox = wrapper.findComponent({ name: "VCheckbox" });
-    expect(checkbox.props()["inputValue"]).toBeTruthy;
+    expect(checkbox.props()["inputValue"]).toBe(true);
 
     const text = wrapper.findComponent({ name: "VTextField" });
     expect(text.props()["value"]).toBe("This is a test text.");
 
     const btn = wrapper.findComponent({ name: "VBtn" });
-    expect(btn.exists()).toBeTruthy();
+    expect(btn.exists()).toBe(true);
   });
 
   it("change done (initial true)", async () => {
@@ -43,10 +43,8 @@ describe("TodoItem.vue", () => {
     });
 
     const checkbox = wrapper.findComponent({ name: "VCheckbox" });
-    checkbox.find('input[type="checkbox"]').trigger("click");
-    await wrapper.vm.$nextTick();
+    await checkbox.find('input[type="checkbox"]').setChecked(false);
 
-    expect(wrapper.emitted("change-done")).toBeTruthy();
     expect(wrapper.emitted("change-done")).toEqual([[123, false]]);
   });
 
@@ -62,10 +60,8 @@ describe("TodoItem.vue", () => {
     });
 
     const checkbox = wrapper.findComponent({ name: "VCheckbox" });
-    checkbox.find('input[type="checkbox"]').trigger("click");
-    await wrapper.vm.$nextTick();
+    await checkbox.find('input[type="checkbox"]').setChecked(true);
 
-    expect(wrapper.emitted("change-done")).toBeTruthy();
     expect(wrapper.emitted("change-done")).toEqual([[123, true]]);
   });
 
@@ -81,10 +77,8 @@ describe("TodoItem.vue", () => {
     });
 
     const input = wrapper.findComponent({ name: "VTextField" });
-    input.find('input[type="text"]').setValue("Updated text.");
-    await wrapper.vm.$nextTick();
+    await input.find('input[type="text"]').setValue("Updated text.");
 
-    expect(wrapper.emitted("change-text")).toBeTruthy();
     expect(wrapper.emitted("change-text")).toEqual([[123, "Updated text."]]);
   });
 
@@ -100,10 +94,8 @@ describe("TodoItem.vue", () => {
     });
 
     const btn = wrapper.findComponent({ name: "VBtn" });
-    btn.trigger("click");
-    await wrapper.vm.$nextTick();
+    await btn.trigger("click");
 
-    expect(wrapper.emitted("delete-item")).toBeTruthy();
     expect(wrapper.emitted("delete-item")).toEqual([[123]]);
   });
 });

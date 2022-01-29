@@ -26,10 +26,9 @@ describe("NewItem.vue", () => {
       vuetify,
     });
 
-    expect(wrapper.findComponent({ name: "VCard" }).exists()).toBeFalsy();
+    expect(wrapper.findComponent({ name: "VCard" }).exists()).toBe(false);
 
-    wrapper.findComponent({ name: "VBtn" }).trigger("click");
-    await wrapper.vm.$nextTick();
+    await wrapper.findComponent({ name: "VBtn" }).trigger("click");
 
     const card = wrapper.findComponent({ name: "VCard" });
 
@@ -40,7 +39,7 @@ describe("NewItem.vue", () => {
     expect(input.find('input[type="text"]').text()).toBe("");
 
     const actions = card.findAllComponents({ name: "VBtn" });
-    expect(actions.length).toBe(2);
+    expect(actions).toHaveLength(2);
     expect(actions.at(0).text()).toBe("Cancel");
     expect(actions.at(1).text()).toBe("Save");
   });
@@ -51,21 +50,19 @@ describe("NewItem.vue", () => {
       vuetify,
     });
 
-    wrapper.findComponent({ name: "VBtn" }).trigger("click");
-    await wrapper.vm.$nextTick();
+    await wrapper.findComponent({ name: "VBtn" }).trigger("click");
 
     const card = wrapper.findComponent({ name: "VCard" });
     const actions = card.findAllComponents({ name: "VBtn" });
-    expect(actions.length).toBe(2);
+    expect(actions).toHaveLength(2);
 
     const input = card.findComponent({ name: "VTextField" });
     await input.find('input[type="text"]').setValue("This is a test text.");
 
-    actions.at(0).trigger("click");
-    await wrapper.vm.$nextTick();
+    await actions.at(0).trigger("click");
 
     expect(wrapper.emitted("save")).toBeFalsy();
-    expect(wrapper.findComponent({ name: "VCard" }).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent({ name: "VCard" }).isVisible()).toBe(false);
   });
 
   it("click save", async () => {
@@ -74,21 +71,18 @@ describe("NewItem.vue", () => {
       vuetify,
     });
 
-    wrapper.findComponent({ name: "VBtn" }).trigger("click");
-    await wrapper.vm.$nextTick();
+    await wrapper.findComponent({ name: "VBtn" }).trigger("click");
 
     const card = wrapper.findComponent({ name: "VCard" });
     const actions = card.findAllComponents({ name: "VBtn" });
-    expect(actions.length).toBe(2);
+    expect(actions).toHaveLength(2);
 
     const input = card.findComponent({ name: "VTextField" });
-    input.find('input[type="text"]').setValue("This is a test text.");
-    actions.at(1).trigger("click");
-    await wrapper.vm.$nextTick();
+    await input.find('input[type="text"]').setValue("This is a test text.");
 
-    expect(wrapper.emitted("save")).toBeTruthy();
+    await actions.at(1).trigger("click");
+
     expect(wrapper.emitted("save")).toEqual([["This is a test text."]]);
-
-    expect(wrapper.findComponent({ name: "VCard" }).isVisible()).toBeFalsy();
+    expect(wrapper.findComponent({ name: "VCard" }).isVisible()).toBe(false);
   });
 });

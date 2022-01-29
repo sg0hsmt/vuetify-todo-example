@@ -18,8 +18,8 @@ describe("MainPage.vue", () => {
       vuetify,
     });
 
-    expect(wrapper.findComponent(NewItem).exists()).toBeTruthy();
-    expect(wrapper.findAllComponents(TodoItem).length).toBe(0);
+    expect(wrapper.findComponent(NewItem).exists()).toBe(true);
+    expect(wrapper.findAllComponents(TodoItem)).toHaveLength(0);
     expect(wrapper.findComponent({ name: "VCardText" }).text()).toBe(
       "todo not found."
     );
@@ -38,7 +38,7 @@ describe("MainPage.vue", () => {
     await wrapper.vm.$nextTick();
 
     const items1 = wrapper.findAllComponents(TodoItem);
-    expect(items1.length).toBe(3);
+    expect(items1).toHaveLength(3);
     expect(items1.at(0).props()).toEqual({ id: 1, text: "one", done: false });
     expect(items1.at(1).props()).toEqual({ id: 2, text: "two", done: false });
     expect(items1.at(2).props()).toEqual({ id: 3, text: "three", done: false });
@@ -47,7 +47,7 @@ describe("MainPage.vue", () => {
     await wrapper.vm.$nextTick();
 
     const items2 = wrapper.findAllComponents(TodoItem);
-    expect(items2.length).toBe(2);
+    expect(items2).toHaveLength(2);
     expect(items2.at(0).props()).toEqual({ id: 2, text: "two", done: false });
     expect(items2.at(1).props()).toEqual({ id: 3, text: "three", done: false });
 
@@ -55,18 +55,17 @@ describe("MainPage.vue", () => {
     await wrapper.vm.$nextTick();
 
     const items3 = wrapper.findAllComponents(TodoItem);
-    expect(items3.length).toBe(2);
+    expect(items3).toHaveLength(2);
     expect(items3.at(0).props()).toEqual({ id: 2, text: "two", done: false });
     expect(items3.at(1).props()).toEqual({ id: 3, text: "333", done: false });
 
     items3.at(0).vm.$emit("delete-item", 2);
     await wrapper.vm.$nextTick();
 
-    wrapper.find('input[type="checkbox"]').trigger("click");
-    await wrapper.vm.$nextTick();
+    await wrapper.find('input[type="checkbox"]').setChecked(false);
 
     const items4 = wrapper.findAllComponents(TodoItem);
-    expect(items4.length).toBe(2);
+    expect(items4).toHaveLength(2);
     expect(items4.at(0).props()).toEqual({ id: 1, text: "one", done: true });
     expect(items4.at(1).props()).toEqual({ id: 3, text: "333", done: false });
   });
