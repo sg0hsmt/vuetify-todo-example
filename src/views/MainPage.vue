@@ -10,8 +10,8 @@
     <v-list v-else>
       <todo-item
         v-for="item in visibleItems"
-        :key="item.id"
         :id="item.id"
+        :key="item.id"
         :text="item.text"
         :done="item.done"
         @change-done="changeDone"

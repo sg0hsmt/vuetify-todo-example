@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="500">
-    <template v-slot:activator="{ on, attrs }">
+    <template #activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on">Add New Item</v-btn>
     </template>
 
