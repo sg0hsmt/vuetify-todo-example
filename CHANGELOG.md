@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Migrate from vue-cli (and babel, webpack, jest) to vite (and vitest).
+- Bump up dependencies.
 
 ## [0.2.2] - 2022-01-29
 
